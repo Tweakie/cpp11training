@@ -14,7 +14,9 @@ int length(const std::string &s) { return 100; }
 
 TEST(lambdas, we_can_define_local_lambdas)
 {
+    const auto &length = [](const std::string&) { return 3; };
     EXPECT_EQ(3, length("abc"));
+    const auto &foo = [] {};
     EXPECT_NO_THROW(foo());
 }
 
@@ -22,6 +24,7 @@ TEST(lambdas, we_can_capture_the_local_variables_by_value)
 {
     for (int i = 0; i != 10; ++i)
     {
+        const auto &length = [=](const std::string &) { return i; };
         EXPECT_EQ(i, length("abc"));
     }
 }
@@ -31,6 +34,7 @@ TEST(lambdas, we_can_capture_local_variables_by_reference)
     int receiver = 0;
     for (int i = 0; i != 10; ++i)
     {
+        const auto &foo = [&receiver, i] {receiver = i; };
         foo();
         EXPECT_EQ(i, receiver);
     }
@@ -40,6 +44,7 @@ TEST(lambdas, we_can_capture_local_variables_by_reference)
 TEST(lambdas, we_can_add_state)
 {
     int foo_calls = 0;
+    auto foo = [&]() mutable { ++foo_calls; };
     foo();
     EXPECT_EQ(1, foo_calls);
     foo();
@@ -47,11 +52,17 @@ TEST(lambdas, we_can_add_state)
 
     {
         // sum of lengths
+        auto length = [length = 0](const std::string &s) mutable { length += s.size(); return length; };
         EXPECT_EQ(3, length("abc"));
         EXPECT_EQ(7, length("efgh"));
     }
     {
         // average length
+        auto length = [length = 0, number = 0](const std::string &s) mutable {
+            length += s.size();
+            ++number;
+            return length / float(number);
+        };
         EXPECT_NEAR(3.000, length("abc"), 0.01);
         EXPECT_NEAR(3.500, length("efgh"), 0.01);
         EXPECT_NEAR(3.333, length("ijk"), 0.01);
