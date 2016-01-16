@@ -21,18 +21,27 @@ TEST(move, speed_this_up)
             : data(new int[other.size])
             , size(other.size)
         {}
+        Heavy(Heavy &&other)
+        {
+            *this = std::move(other);
+        }
+        Heavy& operator=(Heavy&& other)
+        {
+            std::swap(data, other.data);
+            std::swap(size, other.size);
+        }
         ~Heavy() { delete[] data; }
     };
 
     auto consume = [](std::vector<Heavy> prototype)
     {
-        auto copy = prototype;
+        auto copy = std::move(prototype);
     };
 
     auto d = duration([&]
     {
         std::vector<Heavy> prototype{ 100, Heavy{1000} }; // a 100 copies
-        consume(prototype);
+        consume(std::move(prototype));
     }, 10'000);
 
     EXPECT_LE(
