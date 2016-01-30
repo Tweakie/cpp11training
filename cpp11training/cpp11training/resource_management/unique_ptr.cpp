@@ -15,7 +15,7 @@ public:
 
 TEST(unique_ptr, object_is_destructed_when_ptr_out_of_scope)
 {
-    auto thing_wrapper = new JarPotVessel();
+    auto thing_wrapper = std::make_unique<JarPotVessel>();
     bool destructed = false;
     thing_wrapper->destructed = [&] { destructed = true; };
 
