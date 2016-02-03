@@ -1,6 +1,6 @@
 [submodule "moderncpp"]
 	path = moderncpp
-	url = https://github.com/Tweakie/googletest
+	url = https://github.com/xtofl/moderncpp
 [submodule "cpp11training/dependencies/googletest"]
 	path = cpp11training/dependencies/googletest
 	url = https://github.com/Tweakie/googletest
