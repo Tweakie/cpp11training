@@ -29,6 +29,7 @@ TEST(move, DISABLED_speed_this_up)
         {
             std::swap(data, other.data);
             std::swap(size, other.size);
+			return *this;
         }
         ~Heavy() { delete[] data; }
     };
