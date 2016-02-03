@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <vector>
 #include <algorithm>
+#include <iterator>
 
 namespace {
     template<class Container>
