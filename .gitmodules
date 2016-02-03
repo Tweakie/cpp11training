@@ -1,6 +1,6 @@
 [submodule "moderncpp"]
 	path = moderncpp
-	url = git@bitbucket.org:xtofl/moderncpp.git
+	url = git@bitbucket.org:Tweakie/moderncpp.git
 [submodule "cpp11training/dependencies/googletest"]
 	path = cpp11training/dependencies/googletest
-	url = git@github.com:xtofl/googletest.git
+	url = git@github.com:Tweakie/googletest.git
